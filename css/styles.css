@@ -694,7 +694,7 @@ em.accent {
    The third-party player iframe is only injected when the visitor presses
    play, so it never weighs on initial load. aspect-ratio reserves the space
    up front — zero layout shift when the player appears. */
-.video-section { padding-bottom: 0; }
+.video-section { padding-top: clamp(2rem, 3vw, 3.5rem); padding-bottom: 0; }
 .video-facade {
   position: relative;
   aspect-ratio: 16 / 9;
