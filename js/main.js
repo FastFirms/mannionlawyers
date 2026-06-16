@@ -103,13 +103,12 @@
     });
   }
 
-  /* ----- Booking form: client-side validation + success state.
-     NOTE: there is no backend wired here. Point `form.action` at your form
-     endpoint (e.g. Formspree, Netlify Forms, or your own handler) and remove
-     the preventDefault below to submit for real. ----- */
-  var form = document.querySelector("#booking-form");
-  if (form) {
+  /* ----- Forms: client-side validation + Formspree submission via fetch.
+     Targets both the main booking form and sidebar forms on article pages. ----- */
+  function wireForm(form) {
+    if (!form) return;
     form.addEventListener("submit", function (e) {
+      e.preventDefault();
       var valid = true;
 
       form.querySelectorAll("[required]").forEach(function (field) {
@@ -121,21 +120,46 @@
       });
 
       if (!valid) {
-        e.preventDefault();
         var firstInvalid = form.querySelector(".invalid input, .invalid textarea");
         if (firstInvalid) firstInvalid.focus();
         return;
       }
 
-      // Demo behaviour only — replace with a real submission.
-      e.preventDefault();
-      form.hidden = true;
-      var success = document.querySelector(".form-success");
-      if (success) {
-        success.classList.add("show");
-        success.setAttribute("tabindex", "-1");
-        success.focus();
-      }
+      var btn = form.querySelector("[type=submit]");
+      if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { "Accept": "application/json" }
+      }).then(function (res) {
+        if (res.ok) {
+          form.hidden = true;
+          var success = form.closest("form, .form-card, .sidebar-card")
+            ? form.parentElement.querySelector(".form-success")
+            : document.querySelector(".form-success");
+          // Walk up to find the nearest .form-success sibling
+          var parent = form.parentElement;
+          while (parent && !success) {
+            success = parent.querySelector(".form-success");
+            parent = parent.parentElement;
+          }
+          if (success) {
+            success.classList.add("show");
+            success.setAttribute("tabindex", "-1");
+            success.focus();
+          }
+        } else {
+          if (btn) { btn.disabled = false; btn.textContent = "Request a consultation"; }
+          alert("Something went wrong. Please try again or call us directly.");
+        }
+      }).catch(function () {
+        if (btn) { btn.disabled = false; btn.textContent = "Request a consultation"; }
+        alert("Could not send. Please call us on (02) 4704 9977.");
+      });
     });
   }
+
+  wireForm(document.querySelector("#booking-form"));
+  wireForm(document.querySelector("#sidebar-form"));
 })();
