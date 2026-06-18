@@ -345,6 +345,69 @@ em.accent {
   .mega-aside { display: none; } /* the sticky CTA already covers mobile conversion */
 }
 
+/* ---------- Resources simple dropdown ---------- */
+.has-dropdown { display: flex; align-items: center; gap: 0.15rem; position: relative; }
+
+.dropdown-toggle {
+  background: none;
+  border: 0;
+  padding: 0.4rem 0.2rem;
+  cursor: pointer;
+  color: var(--ink-soft);
+  display: inline-flex;
+}
+.dropdown-toggle svg { transition: transform 0.2s ease; }
+.has-dropdown.open .dropdown-toggle svg { transform: rotate(180deg); }
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 160px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px -8px rgba(28, 43, 37, 0.15);
+  padding: 0.5rem 0;
+  list-style: none;
+  z-index: 100;
+  margin: 0;
+}
+.has-dropdown.open .dropdown { display: block; }
+.dropdown li a {
+  display: block;
+  padding: 0.6rem 1.25rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: none;
+}
+.dropdown li a:hover { color: var(--green); background: var(--mist); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .has-dropdown.open .dropdown { animation: mega-in 0.18s ease; }
+}
+
+@media (max-width: 800px) {
+  .has-dropdown { flex-wrap: wrap; }
+  .has-dropdown > a { flex: 1; }
+  .dropdown-toggle { padding: 0.75rem 0.6rem; }
+  .dropdown {
+    position: static;
+    transform: none;
+    box-shadow: none;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    flex-basis: 100%;
+  }
+  .dropdown li a { padding: 0.55rem 1rem; }
+}
+
 .nav-toggle {
   display: none;
   background: none;

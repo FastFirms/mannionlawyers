@@ -54,7 +54,6 @@
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
-          <li><a href="case-studies.html">Case Studies</a></li>
           <li class="has-mega">
             <a href="services.html" aria-current="page">Services</a>
             <button class="mega-toggle" aria-expanded="false" aria-controls="mega-services" aria-label="Open services menu">
@@ -79,7 +78,16 @@
               </div>
             </div>
           </li>
-          <li><a href="resources/index.html">Resources</a></li>
+          <li class="has-dropdown">
+            <a href="resources/index.html">Resources</a>
+            <button class="dropdown-toggle" aria-expanded="false" aria-controls="dropdown-resources" aria-label="Open resources menu">
+              <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1.5 L6 6.5 L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown" id="dropdown-resources">
+              <li><a href="resources/index.html">Guides</a></li>
+              <li><a href="case-studies.html">Case Studies</a></li>
+            </ul>
+          </li>
           <li><a href="locations.html">Locations</a></li>
           <li><a href="support.html">Support</a></li>
           <li><a href="contact.html">Contact</a></li>
