@@ -55,6 +55,44 @@
     });
   }
 
+  /* ----- Resources simple dropdown -----
+     Same disclosure pattern as the Services mega menu but lighter. */
+  var dropdown = document.querySelector(".has-dropdown");
+  if (dropdown) {
+    var dropBtn = dropdown.querySelector(".dropdown-toggle");
+    var dropHoverable = window.matchMedia("(min-width: 801px) and (hover: hover)");
+    var dropTimer;
+
+    function setDrop(open) {
+      dropdown.classList.toggle("open", open);
+      dropBtn.setAttribute("aria-expanded", String(open));
+    }
+
+    dropBtn.addEventListener("click", function () {
+      setDrop(!dropdown.classList.contains("open"));
+    });
+
+    dropdown.addEventListener("mouseenter", function () {
+      if (!dropHoverable.matches) return;
+      clearTimeout(dropTimer);
+      setDrop(true);
+    });
+    dropdown.addEventListener("mouseleave", function () {
+      if (!dropHoverable.matches) return;
+      dropTimer = setTimeout(function () { setDrop(false); }, 160);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && dropdown.classList.contains("open")) {
+        setDrop(false);
+        dropBtn.focus();
+      }
+    });
+    document.addEventListener("click", function (e) {
+      if (!dropdown.contains(e.target)) setDrop(false);
+    });
+  }
+
   /* ----- Scroll reveal (skipped entirely under reduced motion) ----- */
   var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!prefersReduced && "IntersectionObserver" in window) {
@@ -134,8 +172,7 @@
         headers: { "Accept": "application/json" }
       }).then(function (res) {
         if (res.ok) {
-          var isResource = window.location.pathname.indexOf("/resources/") !== -1;
-          window.location.href = isResource ? "../thank-you.html" : "thank-you.html";
+          window.location.href = "/thank-you";
         } else {
           if (btn) { btn.disabled = false; btn.textContent = "Request a consultation"; }
           alert("Something went wrong. Please try again or call us directly.");
