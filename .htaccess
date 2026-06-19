@@ -1,0 +1,20 @@
+Options -Indexes
+
+# Clean URLs — serve /about instead of /about.html
+RewriteEngine On
+
+# 1. If someone requests /about.html, redirect them to /about (301)
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?]
+RewriteRule ^ /%1 [R=301,L]
+
+# 2. Internally map /about to /about.html so the file is found
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([^/]+)$ $1.html [L]
+
+# Resources sub-pages (/resources/fathers-rights-australia → .html)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^resources/([^/]+)$ resources/$1.html [L]
