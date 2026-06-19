@@ -172,8 +172,7 @@
         headers: { "Accept": "application/json" }
       }).then(function (res) {
         if (res.ok) {
-          var isResource = window.location.pathname.indexOf("/resources/") !== -1;
-          window.location.href = isResource ? "../thank-you.html" : "thank-you.html";
+          window.location.href = "/thank-you";
         } else {
           if (btn) { btn.disabled = false; btn.textContent = "Request a consultation"; }
           alert("Something went wrong. Please try again or call us directly.");
