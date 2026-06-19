@@ -210,7 +210,7 @@ em.accent {
   color: var(--green);
 }
 
-.primary-nav ul {
+.primary-nav ul:not(.dropdown) {
   display: flex;
   gap: 1.8rem;
   list-style: none;
