@@ -1,4 +1,11 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/our-team",            "destination": "/about",     "permanent": true },
+    { "source": "/our-story",           "destination": "/about",     "permanent": true },
+    { "source": "/our-approach",        "destination": "/about",     "permanent": true },
+    { "source": "/family-court",        "destination": "/resources", "permanent": true },
+    { "source": "/justice-for-fathers", "destination": "/resources", "permanent": true }
+  ]
 }
