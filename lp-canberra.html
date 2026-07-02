@@ -12,7 +12,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Family Law for Fathers in Canberra | Mannion Lawyers</title>
-  <meta name="description" content="Canberra's family law firm for fathers. Parenting disputes, property settlement, child support. Fixed fees. 40+ years experience. Book a free consultation today.">
+  <meta name="description" content="Canberra's family law firm for fathers. Parenting disputes, property settlement, child support. Fixed fees. 40+ years experience. Book a consultation today.">
   <meta name="robots" content="noindex, nofollow">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,21 +62,50 @@
       text-align: right;
     }
 
-    /* Hero */
+    /* Hero — full-bleed photo + paper scrim, matching homepage */
     .lp-hero {
-      background: var(--green-deep);
-      color: var(--white);
-      padding: clamp(2.5rem, 4vw, 5rem) 0;
+      position: relative;
+      isolation: isolate;
+    }
+    .lp-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      display: block;
+    }
+    .lp-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 70% center;
+    }
+    /* Same paper-toned scrim as homepage: opaque left, fades right */
+    .lp-hero-scrim {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(100deg,
+          rgba(246,247,244,0.97) 0%,
+          rgba(246,247,244,0.92) 30%,
+          rgba(246,247,244,0.65) 52%,
+          rgba(246,247,244,0.15) 72%,
+          rgba(246,247,244,0) 100%),
+        linear-gradient(180deg,
+          rgba(246,247,244,0.5) 0%,
+          rgba(246,247,244,0) 25%);
     }
     .lp-hero .container {
       display: grid;
       grid-template-columns: 1fr 420px;
       gap: 3rem;
       align-items: start;
+      min-height: clamp(30rem, 32rem + 8vw, 44rem);
+      padding-block: clamp(3rem, 2rem + 4vw, 5rem);
     }
     .lp-hero-copy { padding-top: 0.5rem; }
     .lp-hero-copy .eyebrow {
-      color: var(--gold);
+      color: var(--green);
       font-weight: 700;
       font-size: var(--text-sm);
       letter-spacing: 0.06em;
@@ -89,16 +118,17 @@
       font-weight: 500;
       line-height: 1.08;
       letter-spacing: -0.02em;
-      color: var(--white);
+      color: var(--ink);
       margin-bottom: 1.25rem;
+      text-shadow: 0 1px 0 rgba(246,247,244,0.8);
     }
     .lp-hero h1 em {
       font-style: italic;
-      color: var(--gold);
+      color: var(--green);
     }
     .lp-hero-copy p {
       font-size: var(--text-lg);
-      color: rgba(255,255,255,0.82);
+      color: var(--ink-soft);
       line-height: 1.6;
       margin: 0 0 2rem;
       max-width: 46ch;
@@ -112,19 +142,19 @@
       margin: 0;
     }
     .lp-trust-pills li {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(246,247,244,0.82);
+      border: 1px solid var(--line);
       border-radius: 100px;
       padding: 0.3rem 0.85rem;
       font-size: var(--text-sm);
-      color: rgba(255,255,255,0.9);
+      color: var(--ink-soft);
       display: flex;
       align-items: center;
       gap: 0.4rem;
     }
     .lp-trust-pills li::before {
       content: "\2713";
-      color: var(--gold);
+      color: var(--green);
       font-weight: 700;
     }
 
@@ -493,8 +523,15 @@
 
     /* Responsive */
     @media (max-width: 900px) {
-      .lp-hero .container { grid-template-columns: 1fr; }
+      .lp-hero .container { grid-template-columns: 1fr; min-height: auto; }
       .lp-form-card { max-width: 520px; }
+      /* On narrow screens: stack photo above, copy on solid paper below */
+      .lp-hero-bg { position: relative; height: 280px; }
+      .lp-hero-scrim {
+        background: linear-gradient(180deg,
+          rgba(246,247,244,0) 0%,
+          rgba(246,247,244,0.97) 100%);
+      }
     }
     @media (max-width: 600px) {
       .lp-proof-bar .container { gap: 1.25rem; }
@@ -520,18 +557,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="lp-phone-label">Call us now</span>
         (02) 4704 9977
       </a>
-      <a href="#lp-form" class="btn btn-primary" style="white-space:nowrap">Book a consultation</a>
+      <a href="#lp-form" class="btn btn-primary" style="white-space:nowrap;background:var(--green);color:var(--white)">Book a consultation</a>
     </div>
   </div>
 </header>
 
 <!-- HERO -->
 <section class="lp-hero">
+  <picture class="lp-hero-bg">
+    <source type="image/webp" srcset="images/hero-full-1100.webp 1100w, images/hero-full-1600.webp 1600w, images/hero-full-2000.webp 2000w" sizes="100vw">
+    <img src="images/hero-full-1600.jpg"
+         srcset="images/hero-full-700.jpg 700w, images/hero-full-1100.jpg 1100w, images/hero-full-1600.jpg 1600w, images/hero-full-2000.jpg 2000w"
+         sizes="100vw" width="2000" height="936"
+         alt="A father laughing and playing with his three young children on the back lawn of a suburban home"
+         fetchpriority="high">
+  </picture>
+  <div class="lp-hero-scrim" aria-hidden="true"></div>
+
   <div class="container">
     <div class="lp-hero-copy">
       <p class="eyebrow">Canberra family law for fathers</p>
-      <h1>Your children need<br>a father <em>who fights<br>the right way.</em></h1>
-      <p>Mannion Lawyers has worked exclusively with fathers since 1985. We know what courts look for, what evidence matters, and how to keep you in your children's lives — without making things worse.</p>
+      <h1>Family law for fathers.<br><em>&amp; nothing else.</em></h1>
+      <p>Being kept from your kids is a kind of pain most lawyers don't understand. We do. For forty years, we've worked exclusively with fathers across NSW and the ACT — including Canberra.</p>
       <ul class="lp-trust-pills">
         <li>40+ years exclusively for fathers</li>
         <li>Canberra office</li>
@@ -542,7 +589,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="lp-form-card" id="lp-form">
-      <h2>Book your free consultation</h2>
+      <h2>Book a consultation</h2>
       <p class="form-subhead">We'll call you back within one business day. Confidential.</p>
 
       <div class="lp-form-success" id="form-success" role="status">
@@ -596,7 +643,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </label>
         </div>
 
-        <button type="submit" class="btn-submit">Book my free consultation &rarr;</button>
+        <button type="submit" class="btn-submit">Book my consultation &rarr;</button>
         <p class="privacy-note">&#128274; Confidential. No obligation. No spam.</p>
       </form>
     </div>
@@ -717,7 +764,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h2>Don't let another week go by.</h2>
     <p>Early advice makes a real difference. The sooner you understand your position, the more options you have.</p>
     <div class="lp-cta-btns">
-      <a href="#lp-form" class="btn-lp-primary">Book a free consultation &rarr;</a>
+      <a href="#lp-form" class="btn-lp-primary">Book a consultation &rarr;</a>
       <a href="tel:0247049977" class="btn-lp-secondary">&#128222; (02) 4704 9977</a>
     </div>
   </div>
@@ -764,7 +811,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <details class="lp-faq-item">
         <summary>How much does a family lawyer in Canberra cost?</summary>
         <div class="faq-body">
-          <p>It depends on how far the matter goes. Simple consent orders cost far less than contested hearings. At Mannion Lawyers, most stages are quoted at fixed fees so you know the cost before you commit. The consultation is free &mdash; use it to understand your options and the realistic cost range before making any decision.</p>
+          <p>It depends on how far the matter goes. Simple consent orders cost far less than contested hearings. At Mannion Lawyers, most stages are quoted at fixed fees so you know the cost before you commit. Book a consultation to understand your options and the realistic cost range before making any decision.</p>
         </div>
       </details>
 
