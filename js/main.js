@@ -172,6 +172,8 @@
         headers: { "Accept": "application/json" }
       }).then(function (res) {
         if (res.ok) {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: "lead_form_submit", form_id: form.id || "site-form" });
           window.location.href = "/thank-you";
         } else {
           if (btn) { btn.disabled = false; btn.textContent = "Request a consultation"; }
@@ -187,3 +189,23 @@
   wireForm(document.querySelector("#booking-form"));
   wireForm(document.querySelector("#sidebar-form"));
 })();
+
+// GCLID capture: store from URL and populate hidden gclid fields
+(function () {
+  try {
+    var p = new URLSearchParams(location.search), g = p.get('gclid');
+    if (g) { localStorage.setItem('gclid', JSON.stringify({ v: g, t: Date.now() })); }
+    var s = JSON.parse(localStorage.getItem('gclid') || 'null');
+    if (s && Date.now() - s.t < 90 * 864e5) {
+      document.querySelectorAll('input[name="gclid"]').forEach(function (i) { i.value = s.v; });
+    }
+  } catch (e) {}
+})();
+
+// Call tracking: push a dataLayer event on every tel: link click (GTM tag: Ads "Phone click")
+document.addEventListener("click", function (e) {
+  var a = e.target.closest && e.target.closest('a[href^="tel:"]');
+  if (!a) return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: "phone_click", phone_number: a.getAttribute("href").slice(4), page: location.pathname });
+});

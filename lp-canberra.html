@@ -15,7 +15,7 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-545135668/XChLCJPjrPocELS4-IMC', {
-    'phone_conversion_number': '(02) 4704 9977'
+    'phone_conversion_number': '(02) 6243 3607'
   });
 </script>
 <!-- End Google Ads Phone Conversion Tracking -->
@@ -621,9 +621,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
            alt="Mannion Lawyers" class="brand-logo" height="40" loading="eager" fetchpriority="high">
     </a>
     <div class="lp-header-right">
-      <a href="tel:0247049977" class="lp-phone">
+      <a href="tel:0262433607" class="lp-phone">
         <span class="lp-phone-label">Call us now</span>
-        (02) 4704 9977
+        (02) 6243 3607
       </a>
       <a href="#lp-form" class="btn btn-primary" style="white-space:nowrap;background:var(--green);color:var(--white)">Book a consultation</a>
     </div>
@@ -662,7 +662,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="lp-form-success" id="form-success" role="status">
         <h3>Got it &mdash; we'll be in touch.</h3>
-        <p>One of our team will call you back within one business day.<br>For urgent matters, call <a href="tel:0247049977">(02) 4704 9977</a>.</p>
+        <p>One of our team will call you back within one business day.<br>For urgent matters, call <a href="tel:0262433607">(02) 6243 3607</a>.</p>
       </div>
 
       <form class="lp-form" id="lp-lead-form"
@@ -864,7 +864,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>Early advice makes a real difference. The sooner you understand your position, the more options you have.</p>
     <div class="lp-cta-btns">
       <a href="#lp-form" class="btn-lp-primary">Book a consultation &rarr;</a>
-      <a href="tel:0247049977" class="btn-lp-secondary">&#128222; (02) 4704 9977</a>
+      <a href="tel:0262433607" class="btn-lp-secondary">&#128222; (02) 6243 3607</a>
     </div>
   </div>
 </section>
@@ -948,6 +948,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 
+  // Call tracking: dataLayer event on tel: clicks (GTM tag: Ads "Phone click")
+  document.querySelectorAll('a[href^="tel:"]').forEach(function(a) {
+    a.addEventListener('click', function() {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'phone_click', phone_number: a.getAttribute('href').slice(4), page: 'lp-canberra' });
+    });
+  });
+
   // Formspree AJAX submit
   var form = document.getElementById('lp-lead-form');
   var success = document.getElementById('form-success');
@@ -985,5 +993,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   });
 </script>
 
+<!-- GCLID capture for offline conversion matching -->
+<script>
+(function(){
+  try {
+    var p = new URLSearchParams(location.search), g = p.get('gclid');
+    if (g) { localStorage.setItem('gclid', JSON.stringify({v:g, t:Date.now()})); }
+    var s = JSON.parse(localStorage.getItem('gclid')||'null');
+    if (s && Date.now()-s.t < 90*864e5) {
+      document.querySelectorAll('input[name="gclid"]').forEach(function(i){ i.value = s.v; });
+    }
+  } catch(e){}
+})();
+</script>
 </body>
 </html>

@@ -948,6 +948,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 
+  // Call tracking: dataLayer event on tel: clicks (GTM tag: Ads "Phone click")
+  document.querySelectorAll('a[href^="tel:"]').forEach(function(a) {
+    a.addEventListener('click', function() {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'phone_click', phone_number: a.getAttribute('href').slice(4), page: 'lp-wagga' });
+    });
+  });
+
   // Formspree AJAX submit
   var form = document.getElementById('lp-lead-form');
   var success = document.getElementById('form-success');
@@ -985,5 +993,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   });
 </script>
 
+<!-- GCLID capture for offline conversion matching -->
+<script>
+(function(){
+  try {
+    var p = new URLSearchParams(location.search), g = p.get('gclid');
+    if (g) { localStorage.setItem('gclid', JSON.stringify({v:g, t:Date.now()})); }
+    var s = JSON.parse(localStorage.getItem('gclid')||'null');
+    if (s && Date.now()-s.t < 90*864e5) {
+      document.querySelectorAll('input[name="gclid"]').forEach(function(i){ i.value = s.v; });
+    }
+  } catch(e){}
+})();
+</script>
 </body>
 </html>
